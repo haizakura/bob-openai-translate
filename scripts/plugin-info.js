@@ -24,6 +24,7 @@ function requireString(value, pathName) {
 function applyEnglish(info, translations) {
   info.name = requireString(translations.name, "name");
   info.summary = requireString(translations.summary, "summary");
+  info.appcast = requireString(translations.appcast, "appcast");
 
   info.options.forEach(function (option) {
     var translation = translations.options && translations.options[option.identifier];

@@ -1,10 +1,13 @@
 {
   "identifier": "com.haizakura.bob.openai.translate",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "category": "translate",
   "name": "OpenAI 翻译",
   "summary": "使用 OpenAI 进行翻译、润色或执行自定义 Prompt",
   "icon": "124",
+  "author": "haizakura",
+  "homepage": "https://github.com/haizakura/bob-openai-translate",
+  "appcast": "https://raw.githubusercontent.com/haizakura/bob-openai-translate/main/appcast.json",
   "minBobVersion": "1.8.0",
   "options": [
     {

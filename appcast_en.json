@@ -1,0 +1,13 @@
+{
+  "identifier": "com.haizakura.bob.openai.translate",
+  "versions": [
+    {
+      "version": "0.1.0",
+      "desc": "Initial release with the OpenAI Responses API, single-language UI, homepage, and update checking",
+      "sha256": "ef0178d5c11289bb9f32efce3641bd8f58f8be4ddd7eed4649da89d9c7fa6906",
+      "url": "https://github.com/haizakura/bob-openai-translate/releases/download/v0.1.0/openai-translate-en-v0.1.0.bobplugin",
+      "minBobVersion": "1.8.0",
+      "timestamp": 1786795091670
+    }
+  ]
+}
