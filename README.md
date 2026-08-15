@@ -53,8 +53,8 @@ npm run build:all
 
 对应产物为：
 
-- `release/openai-translate-zh-Hans-v0.1.0.bobplugin`
-- `release/openai-translate-en-v0.1.0.bobplugin`
+- `release/openai-translate-zh-Hans-v0.1.1.bobplugin`
+- `release/openai-translate-en-v0.1.1.bobplugin`
 
 `build:zh`、`build:en` 和 `build:all` 分别用于中文、英文和双版本构建。两个版本使用相同的插件标识符和配置项标识符，因此它们是同一插件的不同语言构建，安装另一版本会替换当前版本。
 

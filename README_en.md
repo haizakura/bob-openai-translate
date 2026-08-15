@@ -53,8 +53,8 @@ npm run build:all
 
 The generated packages are:
 
-- `release/openai-translate-zh-Hans-v0.1.0.bobplugin`
-- `release/openai-translate-en-v0.1.0.bobplugin`
+- `release/openai-translate-zh-Hans-v0.1.1.bobplugin`
+- `release/openai-translate-en-v0.1.1.bobplugin`
 
 The `build:zh`, `build:en`, and `build:all` commands build the Chinese, English, and both versions respectively. Both packages use the same plugin identifier and option identifiers, so they are language variants of the same plugin. Installing one variant replaces the other.
 
