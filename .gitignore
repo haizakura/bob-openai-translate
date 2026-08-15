@@ -1,4 +1,5 @@
 dist/
 release/
+docs/
 *.log
 .DS_Store
