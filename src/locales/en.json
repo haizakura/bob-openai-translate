@@ -1,0 +1,112 @@
+{
+  "name": "OpenAI Translate",
+  "summary": "Translate, polish, or run a custom prompt with OpenAI",
+  "options": {
+    "mode": {
+      "title": "Mode",
+      "desc": "Translate targets another language; Polish keeps the source language; Custom Prompt uses the templates below",
+      "menuValues": {
+        "translate": {
+          "title": "Translate",
+          "defaultPluginName": "OpenAI Translate"
+        },
+        "polish": {
+          "title": "Polish",
+          "defaultPluginName": "OpenAI Polish"
+        },
+        "custom": {
+          "title": "Custom Prompt",
+          "defaultPluginName": "OpenAI Prompt"
+        }
+      }
+    },
+    "apiKey": {
+      "title": "API Key",
+      "desc": "Required; create one on the OpenAI API Keys page",
+      "placeholderText": "sk-..."
+    },
+    "baseURL": {
+      "title": "API Base URL",
+      "desc": "Enter the scheme and host without a trailing slash",
+      "placeholderText": "https://api.openai.com"
+    },
+    "apiPath": {
+      "title": "Responses API Path",
+      "desc": "Uses OpenAI's recommended Responses API by default",
+      "placeholderText": "/v1/responses"
+    },
+    "model": {
+      "title": "Model",
+      "desc": "Luna suits high-volume translation; a custom model is also supported",
+      "menuValues": {
+        "gpt-5.6-luna": { "title": "GPT-5.6 Luna" },
+        "gpt-5.6-terra": { "title": "GPT-5.6 Terra" },
+        "gpt-5.6-sol": { "title": "GPT-5.6 Sol" },
+        "custom": { "title": "Custom model" }
+      }
+    },
+    "customModel": {
+      "title": "Custom Model",
+      "desc": "Used only when Custom model is selected",
+      "placeholderText": "model-id"
+    },
+    "reasoningEffort": {
+      "title": "Reasoning Effort",
+      "desc": "Auto omits the parameter; explicit values must be supported by the selected model",
+      "menuValues": {
+        "auto": { "title": "Auto" },
+        "none": { "title": "None" },
+        "minimal": { "title": "Minimal" },
+        "low": { "title": "Low" },
+        "medium": { "title": "Medium" },
+        "high": { "title": "High" },
+        "xhigh": { "title": "XHigh" },
+        "max": { "title": "Max" }
+      }
+    },
+    "verbosity": {
+      "title": "Text Verbosity",
+      "desc": "Auto omits text.verbosity; some custom models may not support it",
+      "menuValues": {
+        "auto": { "title": "Auto" },
+        "low": { "title": "Low" },
+        "medium": { "title": "Medium" },
+        "high": { "title": "High" }
+      }
+    },
+    "maxOutputTokens": {
+      "title": "Max Output Tokens",
+      "desc": "Responses API max_output_tokens; use a positive integer within the selected model's limit",
+      "placeholderText": "4096"
+    },
+    "stream": {
+      "title": "Streaming",
+      "desc": "Show generated text progressively",
+      "menuValues": {
+        "enabled": { "title": "Enabled" },
+        "disabled": { "title": "Disabled" }
+      }
+    },
+    "requestTimeout": {
+      "title": "Request Timeout",
+      "desc": "Seconds, within Bob's supported 30–300 second range",
+      "menuValues": {
+        "30": { "title": "30 seconds" },
+        "60": { "title": "60 seconds" },
+        "120": { "title": "120 seconds" },
+        "180": { "title": "180 seconds" },
+        "300": { "title": "300 seconds" }
+      }
+    },
+    "systemPrompt": {
+      "title": "System Prompt",
+      "desc": "Custom Prompt mode only; supports $query.text, $query.detectFromLang, and $query.detectToLang",
+      "placeholderText": "You are a helpful assistant."
+    },
+    "userPrompt": {
+      "title": "User Prompt",
+      "desc": "Custom Prompt mode only; empty input sends the source text",
+      "placeholderText": "Translate the following text to $query.detectToLang:\n$query.text"
+    }
+  }
+}
