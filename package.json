@@ -1,0 +1,19 @@
+{
+  "name": "bob-openai-translate",
+  "version": "1.0.0",
+  "description": "OpenAI translation, polishing, and custom-prompt plugin for Bob",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "build:zh": "node scripts/build.js --locale zh-Hans",
+    "build:en": "node scripts/build.js --locale en",
+    "build:all": "node scripts/build.js --locale all",
+    "check": "node scripts/check.js",
+    "test": "node --test"
+  },
+  "license": "MIT"
+}
