@@ -1,12 +1,11 @@
-"use strict";
+import test from "node:test";
+import assert from "node:assert/strict";
+import * as fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import * as appcast from "../scripts/appcast.mjs";
 
-var test = require("node:test");
-var assert = require("node:assert/strict");
-var fs = require("node:fs");
-var path = require("node:path");
-var appcast = require("../scripts/appcast");
-
-var root = path.resolve(__dirname, "..");
+var root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 var packageInfo = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
 
 test("release assets use locale-specific GitHub URLs", function () {

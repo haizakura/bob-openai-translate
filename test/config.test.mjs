@@ -1,8 +1,6 @@
-"use strict";
-
-var test = require("node:test");
-var assert = require("node:assert/strict");
-var config = require("../src/lib/config");
+import test from "node:test";
+import assert from "node:assert/strict";
+import config from "../src/modules/config.js";
 
 test("readConfig provides Responses API defaults", function () {
   var value = config.readConfig({});

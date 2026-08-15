@@ -1,24 +1,21 @@
-"use strict";
+import test from "node:test";
+import assert from "node:assert/strict";
+import main from "../src/main.js";
 
-var test = require("node:test");
-var assert = require("node:assert/strict");
-var main = require("../src/main");
+test("main exports only Bob entry functions", function () {
+  assert.deepEqual(Object.keys(main).sort(), [
+    "pluginTimeoutInterval",
+    "pluginValidate",
+    "supportLanguages",
+    "translate"
+  ]);
+});
 
 test("Bob entry points expose common languages", function () {
   var supported = main.supportLanguages();
   ["auto", "zh-Hans", "zh-Hant", "en", "ja", "ko"].forEach(function (language) {
     assert.ok(supported.includes(language));
   });
-});
-
-test("translationResult preserves formatting and mode language semantics", function () {
-  var query = { detectFrom: "en", detectTo: "zh-Hans" };
-  assert.deepEqual(main.translationResult(query, { mode: "translate" }, "a\n\nb"), {
-    from: "en",
-    to: "zh-Hans",
-    toParagraphs: ["a\n\nb"]
-  });
-  assert.equal(main.translationResult(query, { mode: "polish" }, "text").to, "en");
 });
 
 test("translate integrates Bob globals, streams, and completes", function (_, done) {

@@ -1,8 +1,6 @@
-"use strict";
-
-var test = require("node:test");
-var assert = require("node:assert/strict");
-var prompts = require("../src/lib/prompts");
+import test from "node:test";
+import assert from "node:assert/strict";
+import prompts from "../src/modules/prompts.js";
 
 var query = {
   text: "Hello\nworld",

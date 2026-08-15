@@ -1,8 +1,6 @@
-"use strict";
-
-var test = require("node:test");
-var assert = require("node:assert/strict");
-var i18n = require("../src/lib/i18n");
+import test from "node:test";
+import assert from "node:assert/strict";
+import i18n from "../src/modules/i18n.js";
 
 test("runtime messages use exactly one selected language", function () {
   assert.equal(i18n.translate("zh-Hans", "apiKeyRequired"), "请先填写 OpenAI API 密钥");

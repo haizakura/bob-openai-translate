@@ -1,8 +1,6 @@
-"use strict";
-
-var test = require("node:test");
-var assert = require("node:assert/strict");
-var openai = require("../src/lib/openai");
+import test from "node:test";
+import assert from "node:assert/strict";
+import openai from "../src/modules/openai.js";
 
 var config = {
   apiKey: "test-key",
