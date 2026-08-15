@@ -51,6 +51,8 @@ function validatePluginInfo(locale) {
   assert(/^[a-z0-9.]+$/.test(info.identifier), "Bob plugin identifier is invalid");
   assert(info.category === "translate", "Bob plugin category must be translate");
   assert(info.icon === "124", "Bob built-in icon must be 124");
+  assert(/^https:\/\/github\.com\/haizakura\/bob-openai-translate$/.test(info.homepage), "Plugin homepage is invalid");
+  assert(/^https:\/\/raw\.githubusercontent\.com\/haizakura\/bob-openai-translate\/main\/appcast(?:_en)?\.json$/.test(info.appcast), locale + " appcast URL is invalid");
   assert(Array.isArray(info.options), "Bob plugin options are missing");
 
   var optionIds = info.options.map(function (option) {
@@ -73,6 +75,10 @@ function validatePluginInfo(locale) {
 }
 
 pluginInfoModule.SUPPORTED_LOCALES.forEach(validatePluginInfo);
+assert(
+  pluginInfoModule.loadPluginInfo("zh-Hans").appcast !== pluginInfoModule.loadPluginInfo("en").appcast,
+  "Localized packages must use different appcasts"
+);
 
 var jsFiles = [];
 function collect(directory) {

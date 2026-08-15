@@ -10,6 +10,10 @@ test("plugin metadata is generated in one selected language", function () {
 
   assert.equal(chinese.name, "OpenAI 翻译");
   assert.equal(english.name, "OpenAI Translate");
+  assert.equal(chinese.homepage, "https://github.com/haizakura/bob-openai-translate");
+  assert.match(chinese.appcast, /appcast\.json$/);
+  assert.match(english.appcast, /appcast_en\.json$/);
+  assert.notEqual(chinese.appcast, english.appcast);
   assert.equal(chinese.options[0].title, "服务模式");
   assert.equal(english.options[0].title, "Mode");
   assert.deepEqual(
