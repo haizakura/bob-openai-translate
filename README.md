@@ -53,10 +53,25 @@ npm run build:all
 
 对应产物为：
 
-- `release/openai-translate-zh-Hans-v1.0.0.bobplugin`
-- `release/openai-translate-en-v1.0.0.bobplugin`
+- `release/openai-translate-zh-Hans-v0.1.0.bobplugin`
+- `release/openai-translate-en-v0.1.0.bobplugin`
 
 `build:zh`、`build:en` 和 `build:all` 分别用于中文、英文和双版本构建。两个版本使用相同的插件标识符和配置项标识符，因此它们是同一插件的不同语言构建，安装另一版本会替换当前版本。
+
+## 主页与检查更新
+
+插件主页指向本项目的 [GitHub 仓库](https://github.com/haizakura/bob-openai-translate)。Bob 会读取插件 `info.json` 中的 `appcast` 地址检查新版本：
+
+- 中文包使用仓库根目录的 `appcast.json`
+- 英文包使用仓库根目录的 `appcast_en.json`
+
+两个更新清单分别指向对应语言的 GitHub Release 产物，避免更新后改变插件界面语言。准备新版本时，先同步 `package.json` 与 `src/info.json` 中的版本号，再运行：
+
+```bash
+npm run release:prepare
+```
+
+该命令会构建两个语言版本，并根据最终安装包计算 SHA-256、更新两个 appcast。发布 GitHub Release 时，Tag 使用 `v<版本号>`，并上传 `release/` 中的两个 `.bobplugin` 文件。
 
 ## 配置
 
@@ -98,6 +113,7 @@ $query.text
 npm run check
 npm test
 npm run build:all
+npm run release:prepare
 ```
 
 中文文案维护在 `src/info.json`，英文翻译维护在 `src/locales/en.json`。检查脚本会验证两种语言的选项结构、翻译完整性及英文界面中是否意外混入中文。

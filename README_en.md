@@ -53,10 +53,25 @@ npm run build:all
 
 The generated packages are:
 
-- `release/openai-translate-zh-Hans-v1.0.0.bobplugin`
-- `release/openai-translate-en-v1.0.0.bobplugin`
+- `release/openai-translate-zh-Hans-v0.1.0.bobplugin`
+- `release/openai-translate-en-v0.1.0.bobplugin`
 
 The `build:zh`, `build:en`, and `build:all` commands build the Chinese, English, and both versions respectively. Both packages use the same plugin identifier and option identifiers, so they are language variants of the same plugin. Installing one variant replaces the other.
+
+## Homepage and update checking
+
+The plugin homepage points to this project's [GitHub repository](https://github.com/haizakura/bob-openai-translate). Bob checks for new versions through the `appcast` URL in the plugin's `info.json`:
+
+- The Chinese package uses `appcast.json` in the repository root.
+- The English package uses `appcast_en.json` in the repository root.
+
+Each appcast points to the matching language artifact in GitHub Releases, preventing an update from changing the plugin UI language. To prepare a new version, first synchronize the version in `package.json` and `src/info.json`, then run:
+
+```bash
+npm run release:prepare
+```
+
+This command builds both language variants, calculates the SHA-256 of each final package, and updates both appcasts. Create the GitHub Release with a `v<version>` tag and upload both `.bobplugin` files from `release/`.
 
 ## Configuration
 
@@ -98,6 +113,7 @@ The project has no third-party npm dependencies:
 npm run check
 npm test
 npm run build:all
+npm run release:prepare
 ```
 
 Chinese UI copy is maintained in `src/info.json`, and the English translation is maintained in `src/locales/en.json`. The check script validates the option structure, translation completeness, and the absence of accidental Chinese text in the English UI.
