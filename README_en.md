@@ -116,9 +116,11 @@ npm run build:all
 npm run release:prepare
 ```
 
-Chinese UI copy is maintained in `src/info.json`, and the English translation is maintained in `src/locales/en.json`. The check script validates the option structure, translation completeness, and the absence of accidental Chinese text in the English UI.
+Language-neutral plugin structure is maintained in `src/info.json`. Chinese and English UI copy live in `src/locales/zh-Hans.json` and `src/locales/en.json` respectively. The check script validates both option structures and translation completeness, and prevents Chinese copy from returning to the structure file or leaking into the English UI.
 
-Each build artifact is a zip archive with a `.bobplugin` extension. Its root directly contains the single-language `info.json`, `main.js`, and `lib/`.
+Each build artifact is a zip archive with a `.bobplugin` extension. Its root directly contains the single-language `info.json`, `main.js`, and `modules/`.
+
+`src/main.js` contains only the entry functions required by Bob. Translation orchestration and validation live in `src/modules/service.js`, with the remaining responsibilities split across `src/modules/`. Runtime code uses Bob's officially supported [`require` / `module.exports`](https://bobtranslate.com/plugin/api/module.html) module system.
 
 ## API and privacy
 

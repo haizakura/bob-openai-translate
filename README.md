@@ -116,9 +116,11 @@ npm run build:all
 npm run release:prepare
 ```
 
-中文文案维护在 `src/info.json`，英文翻译维护在 `src/locales/en.json`。检查脚本会验证两种语言的选项结构、翻译完整性及英文界面中是否意外混入中文。
+与语言无关的插件结构维护在 `src/info.json`，中文和英文文案分别维护在 `src/locales/zh-Hans.json` 与 `src/locales/en.json`。检查脚本会验证两种语言的选项结构、翻译完整性，并阻止中文文案重新写入结构文件或混入英文界面。
 
-构建产物是一个根目录直接包含单语言 `info.json`、`main.js` 与 `lib/` 的 zip 文件，并使用 `.bobplugin` 扩展名。
+构建产物是一个根目录直接包含单语言 `info.json`、`main.js` 与 `modules/` 的 zip 文件，并使用 `.bobplugin` 扩展名。
+
+`src/main.js` 仅保留 Bob 要求的入口函数，翻译编排与校验逻辑位于 `src/modules/service.js`，其余职责继续拆分在 `src/modules/` 中。运行时代码使用 Bob 官方支持的 [`require` / `module.exports`](https://bobtranslate.com/plugin/api/module.html) 模块机制。
 
 ## API 与隐私说明
 
