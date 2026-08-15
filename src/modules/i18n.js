@@ -1,6 +1,6 @@
 "use strict";
 
-var buildLocale = require("./build-locale");
+var buildLocale = require("./build-locale.js");
 
 var MESSAGES = {
   "zh-Hans": {

@@ -1,21 +1,20 @@
-"use strict";
+import * as crypto from "node:crypto";
+import * as fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { SUPPORTED_LOCALES, loadPluginInfo } from "./plugin-info.mjs";
 
-var crypto = require("node:crypto");
-var fs = require("node:fs");
-var path = require("node:path");
-var pluginInfo = require("./plugin-info");
-
-var ROOT = path.resolve(__dirname, "..");
+var ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 var RELEASE_ROOT = path.join(ROOT, "release");
 var REPOSITORY = "haizakura/bob-openai-translate";
 var LOCALE_CONFIG = {
   "zh-Hans": {
     appcastFile: "appcast.json",
-    desc: "首次发布：支持 OpenAI Responses API、单语言界面、插件主页与自动更新"
+    desc: "改进构建脚本、本地化文案与插件运行时模块结构"
   },
   en: {
     appcastFile: "appcast_en.json",
-    desc: "Initial release with the OpenAI Responses API, single-language UI, homepage, and update checking"
+    desc: "Improve build scripts, localization, and the plugin runtime module structure"
   }
 };
 
@@ -49,7 +48,7 @@ function mergeAppcast(current, identifier, entry) {
 }
 
 function createEntry(locale, version, timestamp) {
-  var info = pluginInfo.loadPluginInfo(locale);
+  var info = loadPluginInfo(locale);
   var archive = path.join(RELEASE_ROOT, archiveName(locale, version));
   if (!fs.existsSync(archive)) {
     throw new Error("Missing release artifact: " + path.relative(ROOT, archive));
@@ -68,8 +67,8 @@ function updateAppcasts(timestamp) {
   var packageInfo = readJSON(path.join(ROOT, "package.json"));
   var generatedAt = Number.isFinite(timestamp) ? Math.trunc(timestamp) : Date.now();
 
-  pluginInfo.SUPPORTED_LOCALES.forEach(function (locale) {
-    var info = pluginInfo.loadPluginInfo(locale);
+  SUPPORTED_LOCALES.forEach(function (locale) {
+    var info = loadPluginInfo(locale);
     var config = LOCALE_CONFIG[locale];
     var appcastPath = path.join(ROOT, config.appcastFile);
     var current = fs.existsSync(appcastPath) ? readJSON(appcastPath) : null;
@@ -79,14 +78,8 @@ function updateAppcasts(timestamp) {
   });
 }
 
-if (require.main === module) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   updateAppcasts();
 }
 
-module.exports = {
-  LOCALE_CONFIG: LOCALE_CONFIG,
-  archiveName: archiveName,
-  mergeAppcast: mergeAppcast,
-  releaseURL: releaseURL,
-  updateAppcasts: updateAppcasts
-};
+export { LOCALE_CONFIG, archiveName, mergeAppcast, releaseURL, updateAppcasts };

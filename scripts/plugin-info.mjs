@@ -1,9 +1,8 @@
-"use strict";
+import * as fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-var fs = require("node:fs");
-var path = require("node:path");
-
-var ROOT = path.resolve(__dirname, "..");
+var ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 var SUPPORTED_LOCALES = ["zh-Hans", "en"];
 
 function readJSON(file) {
@@ -21,7 +20,7 @@ function requireString(value, pathName) {
   return value;
 }
 
-function applyEnglish(info, translations) {
+function applyLocalization(info, translations) {
   info.name = requireString(translations.name, "name");
   info.summary = requireString(translations.summary, "summary");
   info.appcast = requireString(translations.appcast, "appcast");
@@ -33,10 +32,8 @@ function applyEnglish(info, translations) {
     }
 
     option.title = requireString(translation.title, "options." + option.identifier + ".title");
-    if (typeof option.desc === "string") {
-      option.desc = requireString(translation.desc, "options." + option.identifier + ".desc");
-    }
-    if (option.textConfig && typeof option.textConfig.placeholderText === "string") {
+    option.desc = requireString(translation.desc, "options." + option.identifier + ".desc");
+    if (option.textConfig) {
       option.textConfig.placeholderText = requireString(
         translation.placeholderText,
         "options." + option.identifier + ".placeholderText"
@@ -52,7 +49,7 @@ function applyEnglish(info, translations) {
           menuTranslation.title,
           "options." + option.identifier + ".menuValues." + menuValue.value + ".title"
         );
-        if (typeof menuValue.defaultPluginName === "string") {
+        if (typeof menuTranslation.defaultPluginName === "string") {
           menuValue.defaultPluginName = requireString(
             menuTranslation.defaultPluginName,
             "options." + option.identifier + ".menuValues." + menuValue.value + ".defaultPluginName"
@@ -71,14 +68,8 @@ function loadPluginInfo(locale) {
   }
 
   var info = clone(readJSON(path.join(ROOT, "src", "info.json")));
-  if (locale === "en") {
-    var translations = readJSON(path.join(ROOT, "src", "locales", "en.json"));
-    return applyEnglish(info, translations);
-  }
-  return info;
+  var translations = readJSON(path.join(ROOT, "src", "locales", locale + ".json"));
+  return applyLocalization(info, translations);
 }
 
-module.exports = {
-  SUPPORTED_LOCALES: SUPPORTED_LOCALES,
-  loadPluginInfo: loadPluginInfo
-};
+export { SUPPORTED_LOCALES, loadPluginInfo };

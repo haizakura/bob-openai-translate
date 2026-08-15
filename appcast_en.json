@@ -2,6 +2,14 @@
   "identifier": "com.haizakura.bob.openai.translate",
   "versions": [
     {
+      "version": "0.1.1",
+      "desc": "Improve build scripts, localization, and the plugin runtime module structure",
+      "sha256": "85011921b3e4b4ad9ba885bd85265424bd2e49c8faa62f2cdc905a402cc07c5d",
+      "url": "https://github.com/haizakura/bob-openai-translate/releases/download/v0.1.1/openai-translate-en-v0.1.1.bobplugin",
+      "minBobVersion": "1.8.0",
+      "timestamp": 1786805053251
+    },
+    {
       "version": "0.1.0",
       "desc": "Initial release with the OpenAI Responses API, single-language UI, homepage, and update checking",
       "sha256": "ef0178d5c11289bb9f32efce3641bd8f58f8be4ddd7eed4649da89d9c7fa6906",

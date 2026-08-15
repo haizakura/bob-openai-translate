@@ -1,11 +1,10 @@
-"use strict";
+import * as childProcess from "node:child_process";
+import * as fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { SUPPORTED_LOCALES, loadPluginInfo } from "./plugin-info.mjs";
 
-var childProcess = require("node:child_process");
-var fs = require("node:fs");
-var path = require("node:path");
-var pluginInfo = require("./plugin-info");
-
-var root = path.resolve(__dirname, "..");
+var root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 var source = path.join(root, "src");
 var distRoot = path.join(root, "dist");
 var releaseRoot = path.join(root, "release");
@@ -34,16 +33,16 @@ function selectedLocale(args) {
 }
 
 function buildLocale(locale) {
-  var info = pluginInfo.loadPluginInfo(locale);
+  var info = loadPluginInfo(locale);
   var debugPlugin = path.join(distRoot, "openai-translate-" + locale + ".bobplugin");
   var archiveName = "openai-translate-" + locale + "-v" + packageInfo.version + ".bobplugin";
   var archivePath = path.join(releaseRoot, archiveName);
 
   fs.mkdirSync(debugPlugin, { recursive: true });
   fs.copyFileSync(path.join(source, "main.js"), path.join(debugPlugin, "main.js"));
-  fs.cpSync(path.join(source, "lib"), path.join(debugPlugin, "lib"), { recursive: true });
+  fs.cpSync(path.join(source, "modules"), path.join(debugPlugin, "modules"), { recursive: true });
   fs.writeFileSync(
-    path.join(debugPlugin, "lib", "build-locale.js"),
+    path.join(debugPlugin, "modules", "build-locale.js"),
     '"use strict";\n\nmodule.exports = ' + JSON.stringify(locale) + ";\n"
   );
   fs.copyFileSync(path.join(root, "LICENSE"), path.join(debugPlugin, "LICENSE"));
@@ -66,7 +65,7 @@ function buildLocale(locale) {
 }
 
 var locale = selectedLocale(process.argv.slice(2));
-var locales = locale === "all" ? pluginInfo.SUPPORTED_LOCALES : [locale];
+var locales = locale === "all" ? SUPPORTED_LOCALES : [locale];
 
 fs.rmSync(distRoot, { recursive: true, force: true });
 fs.mkdirSync(distRoot, { recursive: true });

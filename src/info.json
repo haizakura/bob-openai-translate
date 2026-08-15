@@ -1,182 +1,125 @@
 {
   "identifier": "com.haizakura.bob.openai.translate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "category": "translate",
-  "name": "OpenAI 翻译",
-  "summary": "使用 OpenAI 进行翻译、润色或执行自定义 Prompt",
   "icon": "124",
   "author": "haizakura",
   "homepage": "https://github.com/haizakura/bob-openai-translate",
-  "appcast": "https://raw.githubusercontent.com/haizakura/bob-openai-translate/main/appcast.json",
   "minBobVersion": "1.8.0",
   "options": [
     {
       "identifier": "mode",
       "type": "menu",
-      "title": "服务模式",
       "defaultValue": "translate",
-      "desc": "翻译会转换为目标语言；润色会保留原语言；自定义 Prompt 使用下方模板",
       "isKeyOption": true,
       "menuValues": [
-        {
-          "title": "翻译",
-          "value": "translate",
-          "defaultPluginName": "OpenAI 翻译"
-        },
-        {
-          "title": "润色",
-          "value": "polish",
-          "defaultPluginName": "OpenAI 润色"
-        },
-        {
-          "title": "自定义 Prompt",
-          "value": "custom",
-          "defaultPluginName": "OpenAI Prompt"
-        }
+        { "value": "translate" },
+        { "value": "polish" },
+        { "value": "custom" }
       ]
     },
     {
       "identifier": "apiKey",
       "type": "text",
-      "title": "API 密钥",
-      "desc": "必填；可在 OpenAI API 密钥页面创建",
       "textConfig": {
-        "type": "secure",
-        "placeholderText": "sk-..."
+        "type": "secure"
       }
     },
     {
       "identifier": "baseURL",
       "type": "text",
-      "title": "API 基础 URL",
       "defaultValue": "https://api.openai.com",
-      "desc": "仅填写协议和主机，不要包含末尾斜杠",
       "textConfig": {
-        "type": "visible",
-        "placeholderText": "https://api.openai.com"
+        "type": "visible"
       }
     },
     {
       "identifier": "apiPath",
       "type": "text",
-      "title": "Responses API 路径",
       "defaultValue": "/v1/responses",
-      "desc": "默认使用 OpenAI 推荐的 Responses API",
       "textConfig": {
-        "type": "visible",
-        "placeholderText": "/v1/responses"
+        "type": "visible"
       }
     },
     {
       "identifier": "model",
       "type": "menu",
-      "title": "模型",
       "defaultValue": "gpt-5.6-luna",
-      "desc": "Luna 适合高频翻译；也可选择自定义模型",
       "menuValues": [
-        {
-          "title": "GPT-5.6 Luna",
-          "value": "gpt-5.6-luna"
-        },
-        {
-          "title": "GPT-5.6 Terra",
-          "value": "gpt-5.6-terra"
-        },
-        {
-          "title": "GPT-5.6 Sol",
-          "value": "gpt-5.6-sol"
-        },
-        {
-          "title": "自定义模型",
-          "value": "custom"
-        }
+        { "value": "gpt-5.6-luna" },
+        { "value": "gpt-5.6-terra" },
+        { "value": "gpt-5.6-sol" },
+        { "value": "custom" }
       ]
     },
     {
       "identifier": "customModel",
       "type": "text",
-      "title": "自定义模型",
-      "desc": "仅在模型选择“自定义模型”时生效",
       "textConfig": {
-        "type": "visible",
-        "placeholderText": "model-id"
+        "type": "visible"
       }
     },
     {
       "identifier": "reasoningEffort",
       "type": "menu",
-      "title": "推理强度",
       "defaultValue": "none",
-      "desc": "自动表示不发送该参数，由模型决定；显式值必须受所选模型支持",
       "menuValues": [
-        { "title": "自动", "value": "auto" },
-        { "title": "无", "value": "none" },
-        { "title": "极低", "value": "minimal" },
-        { "title": "低", "value": "low" },
-        { "title": "中", "value": "medium" },
-        { "title": "高", "value": "high" },
-        { "title": "极高", "value": "xhigh" },
-        { "title": "最大", "value": "max" }
+        { "value": "auto" },
+        { "value": "none" },
+        { "value": "minimal" },
+        { "value": "low" },
+        { "value": "medium" },
+        { "value": "high" },
+        { "value": "xhigh" },
+        { "value": "max" }
       ]
     },
     {
       "identifier": "verbosity",
       "type": "menu",
-      "title": "输出详略",
       "defaultValue": "auto",
-      "desc": "自动表示不发送 text.verbosity；并非所有自定义模型都支持该参数",
       "menuValues": [
-        { "title": "自动", "value": "auto" },
-        { "title": "低", "value": "low" },
-        { "title": "中", "value": "medium" },
-        { "title": "高", "value": "high" }
+        { "value": "auto" },
+        { "value": "low" },
+        { "value": "medium" },
+        { "value": "high" }
       ]
     },
     {
       "identifier": "maxOutputTokens",
       "type": "text",
-      "title": "最大输出 token 数",
       "defaultValue": "4096",
-      "desc": "Responses API 的 max_output_tokens，必须为正整数且不得超过所选模型上限",
       "textConfig": {
-        "type": "visible",
-        "placeholderText": "4096"
+        "type": "visible"
       }
     },
     {
       "identifier": "stream",
       "type": "menu",
-      "title": "流式输出",
       "defaultValue": "enabled",
-      "desc": "逐步显示生成内容",
       "menuValues": [
-        { "title": "启用", "value": "enabled" },
-        { "title": "禁用", "value": "disabled" }
+        { "value": "enabled" },
+        { "value": "disabled" }
       ]
     },
     {
       "identifier": "requestTimeout",
       "type": "menu",
-      "title": "请求超时",
       "defaultValue": "60",
-      "desc": "单位为秒，符合 Bob 允许的 30–300 秒范围",
       "menuValues": [
-        { "title": "30 秒", "value": "30" },
-        { "title": "60 秒", "value": "60" },
-        { "title": "120 秒", "value": "120" },
-        { "title": "180 秒", "value": "180" },
-        { "title": "300 秒", "value": "300" }
+        { "value": "30" },
+        { "value": "60" },
+        { "value": "120" },
+        { "value": "180" },
+        { "value": "300" }
       ]
     },
     {
       "identifier": "systemPrompt",
       "type": "text",
-      "title": "角色设定",
-      "desc": "仅自定义 Prompt 模式使用；支持 $query.text、$query.detectFromLang、$query.detectToLang",
       "textConfig": {
         "type": "visible",
         "height": 100,
-        "placeholderText": "你是一个乐于助人的助手。",
         "keyWords": [
           "$query.text",
           "$query.detectFromLang",
@@ -187,13 +130,10 @@
     {
       "identifier": "userPrompt",
       "type": "text",
-      "title": "用户指令",
       "defaultValue": "$query.text",
-      "desc": "仅自定义 Prompt 模式使用；留空时直接发送原文",
       "textConfig": {
         "type": "visible",
         "height": 100,
-        "placeholderText": "将以下文本翻译为 $query.detectToLang：\n$query.text",
         "keyWords": [
           "$query.text",
           "$query.detectFromLang",

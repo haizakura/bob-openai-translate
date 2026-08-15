@@ -2,6 +2,14 @@
   "identifier": "com.haizakura.bob.openai.translate",
   "versions": [
     {
+      "version": "0.1.1",
+      "desc": "改进构建脚本、本地化文案与插件运行时模块结构",
+      "sha256": "a1bb7b0b5c154bb9ba6a786aa69a7cf7a2e283cbaac5632ce2365d98d5b11ebd",
+      "url": "https://github.com/haizakura/bob-openai-translate/releases/download/v0.1.1/openai-translate-zh-Hans-v0.1.1.bobplugin",
+      "minBobVersion": "1.8.0",
+      "timestamp": 1786805053251
+    },
+    {
       "version": "0.1.0",
       "desc": "首次发布：支持 OpenAI Responses API、单语言界面、插件主页与自动更新",
       "sha256": "c6180157035b0a901a2b7a3ffeda9502c7df8815e32677d8ab5ff62ec4a98d8d",

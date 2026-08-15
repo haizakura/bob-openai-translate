@@ -1,7 +1,7 @@
 "use strict";
 
-var languages = require("./languages");
-var i18n = require("./i18n");
+var languages = require("./languages.js");
+var i18n = require("./i18n.js");
 
 function queryValue(query, primary, legacy, fallback) {
   if (query && typeof query[primary] === "string" && query[primary]) {

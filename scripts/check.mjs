@@ -1,12 +1,12 @@
-"use strict";
+import * as childProcess from "node:child_process";
+import * as fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { SUPPORTED_LOCALES, loadPluginInfo } from "./plugin-info.mjs";
 
-var childProcess = require("node:child_process");
-var fs = require("node:fs");
-var path = require("node:path");
-var pluginInfoModule = require("./plugin-info");
-
-var root = path.resolve(__dirname, "..");
+var root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 var packageInfo = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
+var pluginInfoTemplate = fs.readFileSync(path.join(root, "src", "info.json"), "utf8");
 
 function assert(condition, message) {
   if (!condition) {
@@ -27,6 +27,11 @@ var requiredOptions = [
   "userPrompt"
 ];
 
+assert(
+  !/[\u3400-\u9fff]/.test(pluginInfoTemplate),
+  "Chinese interface copy must be maintained in src/locales/zh-Hans.json"
+);
+
 function interfaceStrings(info) {
   var values = [info.name, info.summary];
   info.options.forEach(function (option) {
@@ -46,7 +51,7 @@ function interfaceStrings(info) {
 }
 
 function validatePluginInfo(locale) {
-  var info = pluginInfoModule.loadPluginInfo(locale);
+  var info = loadPluginInfo(locale);
   assert(packageInfo.version === info.version, "package.json and " + locale + " info versions differ");
   assert(/^[a-z0-9.]+$/.test(info.identifier), "Bob plugin identifier is invalid");
   assert(info.category === "translate", "Bob plugin category must be translate");
@@ -74,9 +79,9 @@ function validatePluginInfo(locale) {
   }
 }
 
-pluginInfoModule.SUPPORTED_LOCALES.forEach(validatePluginInfo);
+SUPPORTED_LOCALES.forEach(validatePluginInfo);
 assert(
-  pluginInfoModule.loadPluginInfo("zh-Hans").appcast !== pluginInfoModule.loadPluginInfo("en").appcast,
+  loadPluginInfo("zh-Hans").appcast !== loadPluginInfo("en").appcast,
   "Localized packages must use different appcasts"
 );
 
@@ -86,11 +91,25 @@ function collect(directory) {
     var file = path.join(directory, entry.name);
     if (entry.isDirectory()) {
       collect(file);
-    } else if (entry.name.endsWith(".js")) {
+    } else if (entry.name.endsWith(".js") || entry.name.endsWith(".mjs")) {
       jsFiles.push(file);
     }
   });
 }
+
+function assertESModuleScripts(directory) {
+  fs.readdirSync(directory, { withFileTypes: true }).forEach(function (entry) {
+    var file = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      assertESModuleScripts(file);
+    } else if (entry.name.endsWith(".js")) {
+      throw new Error("Build and test scripts must use the .mjs extension: " + file);
+    }
+  });
+}
+
+assertESModuleScripts(path.join(root, "scripts"));
+assertESModuleScripts(path.join(root, "test"));
 
 ["src", "scripts", "test"].forEach(function (directory) {
   collect(path.join(root, directory));
@@ -102,5 +121,5 @@ jsFiles.forEach(function (file) {
 });
 
 process.stdout.write(
-  "Checked " + pluginInfoModule.SUPPORTED_LOCALES.length + " locales and " + jsFiles.length + " JavaScript files\n"
+  "Checked " + SUPPORTED_LOCALES.length + " locales and " + jsFiles.length + " JavaScript files\n"
 );

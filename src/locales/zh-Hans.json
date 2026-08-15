@@ -1,0 +1,113 @@
+{
+  "name": "OpenAI 翻译",
+  "summary": "使用 OpenAI 进行翻译、润色或执行自定义 Prompt",
+  "appcast": "https://raw.githubusercontent.com/haizakura/bob-openai-translate/main/appcast.json",
+  "options": {
+    "mode": {
+      "title": "服务模式",
+      "desc": "翻译会转换为目标语言；润色会保留原语言；自定义 Prompt 使用下方模板",
+      "menuValues": {
+        "translate": {
+          "title": "翻译",
+          "defaultPluginName": "OpenAI 翻译"
+        },
+        "polish": {
+          "title": "润色",
+          "defaultPluginName": "OpenAI 润色"
+        },
+        "custom": {
+          "title": "自定义 Prompt",
+          "defaultPluginName": "OpenAI Prompt"
+        }
+      }
+    },
+    "apiKey": {
+      "title": "API 密钥",
+      "desc": "必填；可在 OpenAI API 密钥页面创建",
+      "placeholderText": "sk-..."
+    },
+    "baseURL": {
+      "title": "API 基础 URL",
+      "desc": "仅填写协议和主机，不要包含末尾斜杠",
+      "placeholderText": "https://api.openai.com"
+    },
+    "apiPath": {
+      "title": "Responses API 路径",
+      "desc": "默认使用 OpenAI 推荐的 Responses API",
+      "placeholderText": "/v1/responses"
+    },
+    "model": {
+      "title": "模型",
+      "desc": "Luna 适合高频翻译；也可选择自定义模型",
+      "menuValues": {
+        "gpt-5.6-luna": { "title": "GPT-5.6 Luna" },
+        "gpt-5.6-terra": { "title": "GPT-5.6 Terra" },
+        "gpt-5.6-sol": { "title": "GPT-5.6 Sol" },
+        "custom": { "title": "自定义模型" }
+      }
+    },
+    "customModel": {
+      "title": "自定义模型",
+      "desc": "仅在模型选择“自定义模型”时生效",
+      "placeholderText": "model-id"
+    },
+    "reasoningEffort": {
+      "title": "推理强度",
+      "desc": "自动表示不发送该参数，由模型决定；显式值必须受所选模型支持",
+      "menuValues": {
+        "auto": { "title": "自动" },
+        "none": { "title": "无" },
+        "minimal": { "title": "极低" },
+        "low": { "title": "低" },
+        "medium": { "title": "中" },
+        "high": { "title": "高" },
+        "xhigh": { "title": "极高" },
+        "max": { "title": "最大" }
+      }
+    },
+    "verbosity": {
+      "title": "输出详略",
+      "desc": "自动表示不发送 text.verbosity；并非所有自定义模型都支持该参数",
+      "menuValues": {
+        "auto": { "title": "自动" },
+        "low": { "title": "低" },
+        "medium": { "title": "中" },
+        "high": { "title": "高" }
+      }
+    },
+    "maxOutputTokens": {
+      "title": "最大输出 token 数",
+      "desc": "Responses API 的 max_output_tokens，必须为正整数且不得超过所选模型上限",
+      "placeholderText": "4096"
+    },
+    "stream": {
+      "title": "流式输出",
+      "desc": "逐步显示生成内容",
+      "menuValues": {
+        "enabled": { "title": "启用" },
+        "disabled": { "title": "禁用" }
+      }
+    },
+    "requestTimeout": {
+      "title": "请求超时",
+      "desc": "单位为秒，符合 Bob 允许的 30–300 秒范围",
+      "menuValues": {
+        "30": { "title": "30 秒" },
+        "60": { "title": "60 秒" },
+        "120": { "title": "120 秒" },
+        "180": { "title": "180 秒" },
+        "300": { "title": "300 秒" }
+      }
+    },
+    "systemPrompt": {
+      "title": "角色设定",
+      "desc": "仅自定义 Prompt 模式使用；支持 $query.text、$query.detectFromLang、$query.detectToLang",
+      "placeholderText": "你是一个乐于助人的助手。"
+    },
+    "userPrompt": {
+      "title": "用户指令",
+      "desc": "仅自定义 Prompt 模式使用；留空时直接发送原文",
+      "placeholderText": "将以下文本翻译为 $query.detectToLang：\n$query.text"
+    }
+  }
+}

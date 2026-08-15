@@ -1,6 +1,6 @@
 "use strict";
 
-var i18n = require("./i18n");
+var i18n = require("./i18n.js");
 
 function createRequestBody(config, prompt, stream) {
   var body = {
